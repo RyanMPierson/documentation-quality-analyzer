@@ -2,6 +2,8 @@
 
 A comprehensive web-based tool for technical writers to analyze and improve documentation quality. This tool provides automated analysis of document structure, readability, cross-references, style compliance, and terminology consistency.
 
+![screenshot](https://github.com/user-attachments/assets/54cd763b-2567-4326-9fa4-c67d0df77aa8)
+
 ## Features
 
 ### 🔍 Document Analysis
@@ -23,6 +25,8 @@ A comprehensive web-based tool for technical writers to analyze and improve docu
 - Visual progress tracking
 - Issue identification and suggestions
 - Historical trends and improvements
+
+![screenshot 2](https://github.com/user-attachments/assets/af39b8e1-da90-41c0-a2a4-bde7b97df2c5)
 
 ### 💡 Smart Suggestions
 - Actionable recommendations for improvement
