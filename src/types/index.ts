@@ -138,12 +138,29 @@ export interface GlossaryTerm {
   alternatives: string[];
 }
 
+export interface RecentAnalysis {
+  id: string;
+  title: string;
+  score: number;
+  date: Date;
+  issues: number;
+  issueList?: string[]; // NEW: list of issue messages/types for aggregation
+}
+
 export interface QualityMetrics {
   totalDocuments: number;
   averageScore: number;
   scoreDistribution: ScoreDistribution;
   commonIssues: IssueFrequency[];
   improvementTrends: TrendData[];
+  recentAnalyses?: RecentAnalysis[];
+  // Add per-metric fields for dashboard
+  lastStructureScore?: number;
+  lastReadabilityScore?: number;
+  lastLinksOk?: number;
+  lastStyleCompliance?: number;
+  lastTerminologyConsistency?: number;
+  issuesResolved?: number; // NEW: track resolved issues
 }
 
 export interface ScoreDistribution {

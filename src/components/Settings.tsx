@@ -1,29 +1,35 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { X, Save, RefreshCw, Plus, Trash2, GripVertical } from 'lucide-react';
-import { Settings as SettingsType, StyleGuideConfig, ReadabilityTargets, LinkCheckSettings, QualityTargets, ExpectedSections } from '@/types';
+import { StyleGuideConfig, ReadabilityTargets, LinkCheckSettings, QualityTargets, ExpectedSections } from '@/types';
+import { clearAnalytics } from '@/lib/analytics';
+import { useSettings } from '@/lib/useSettings';
 
 interface SettingsProps {
   isOpen: boolean;
   onClose: () => void;
-  settings: SettingsType;
-  onSave: (settings: SettingsType) => void;
 }
 
-export function Settings({ isOpen, onClose, settings, onSave }: SettingsProps) {
-  const [currentSettings, setCurrentSettings] = useState<SettingsType>(settings);
+export function Settings({ isOpen, onClose }: SettingsProps) {
+  const { settings, setSettings } = useSettings();
+  const [currentSettings, setCurrentSettings] = useState(settings);
   const [activeTab, setActiveTab] = useState<'style' | 'readability' | 'links' | 'glossary' | 'sections' | 'targets'>('style');
+
+  useEffect(() => {
+    if (isOpen) setCurrentSettings(settings);
+  }, [isOpen, settings]);
 
   if (!isOpen) return null;
 
   const handleSave = () => {
-    onSave(currentSettings);
+    setSettings(currentSettings);
     onClose();
   };
 
   const handleReset = () => {
-    setCurrentSettings(settings);
+    setCurrentSettings(settings); // Reset settings UI
+    clearAnalytics(); // Reset analytics data
   };
 
   const updateStyleGuide = (updates: Partial<StyleGuideConfig>) => {
@@ -68,14 +74,14 @@ export function Settings({ isOpen, onClose, settings, onSave }: SettingsProps) {
   const updateExpectedSections = (updates: Partial<ExpectedSections>) => {
     setCurrentSettings(prev => ({
       ...prev,
-      expectedSections: { 
+      expectedSections: {
         ...{
           enabled: true,
           sections: [],
           allowCustomSections: true
         },
         ...prev.expectedSections,
-        ...updates 
+        ...updates
       }
     }));
   };
